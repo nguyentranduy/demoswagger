@@ -1,0 +1,11 @@
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: Integer
+          description: ID của danh mục
+        title:
+          type: String
+          description: Tên danh mục

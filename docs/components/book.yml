@@ -1,0 +1,17 @@
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: Integer
+          description: ID của sách
+        title:
+          type: String
+          description: Tiêu đề của sách
+        author:
+          type: String
+          description: Tác giả của sách
+        published_year:
+          type: Integer
+          description: Năm xuất bản của sách

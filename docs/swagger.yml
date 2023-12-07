@@ -1,0 +1,138 @@
+openapi: 3.0.0
+info:
+  title: Quản lý Sách API
+  description: API để quản lý thông tin sách
+  version: 1.0.0
+components:
+  schemas:
+    Book:
+      $ref: 'components/book.yml#/components/schemas/Book'
+    Category:
+      $ref: 'components/category.yml#/components/schemas/Category'
+tags:
+  - name: Book
+    description: Quản lý sách
+  - name: Category
+    description: Quản lý danh mục
+paths:
+  /books:
+    get:
+      tags:
+        - Book
+      summary: Lấy danh sách sách
+      responses:
+        '200':
+          description: Trả về danh sách sách thành công
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+                example:
+                  - id: 1
+                    title: "Book 1"
+                    author: "Author 1"
+                    published_year: 2020
+                  - id: 2
+                    title: "Book 2"
+                    author: "Author 2"
+                    published_year: 2021
+                  - id: 3
+                    title: "Book 3"
+                    author: "Author 3"
+                    published_year: 2022
+    post:
+      tags:
+        - Book
+      summary: Thêm sách mới
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+            examples:
+              sampleRequest:
+                value:
+                  title: "New Book"
+                  author: "Author"
+                  published_year: 2023
+      responses:
+        '200':
+          description: Sách mới đã được thêm thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+              example:
+                  id: 1
+                  title: "New Book"
+                  author: "Author"
+                  published_year: 2023
+        '400':
+          description: Yêu cầu không hợp lệ, kiểm tra lại dữ liệu nhập vào
+  /books/{bookId}:
+    parameters:
+      - name: bookId
+        in: path
+        required: true
+        description: ID của sách cần thao tác
+        schema:
+          type: integer
+    get:
+      tags:
+        - Book
+      summary: Lấy thông tin của một quyển sách
+      responses:
+        '200':
+          description: Trả về thông tin của sách thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+              example:
+                id: 1
+                title: "New Book"
+                author: "Author"
+                published_year: 2023
+        '404':
+          description: Không tìm thấy sách với ID cung cấp
+    put:
+      tags:
+        - Book
+      summary: Cập nhật thông tin sách
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+            examples:
+              sampleRequest:
+                value:
+                  id: 1
+                  title: "Updated Book"
+                  author: "Updated Author"
+                  published_year: 2023
+      responses:
+        '200':
+          description: Thông tin của sách đã được cập nhật thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+              example:
+                id: 1
+                title: "Updated Book"
+                author: "Updated Author"
+                published_year: 2023
+        '400':
+          description: Yêu cầu không hợp lệ, kiểm tra lại dữ liệu nhập vào
+    delete:
+      tags:
+        - Book
+      summary: Xóa sách
+      responses:
+        '204':
+          description: Sách đã được xóa thành công
